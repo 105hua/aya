@@ -1,0 +1,23 @@
+{
+    "name": "aya",
+    "module": "index.ts",
+    "type": "module",
+    "private": true,
+    "devDependencies": {
+        "@types/bun": "latest",
+        "prettier": "3.6.2",
+        "prisma": "^6.14.0"
+    },
+    "peerDependencies": {
+        "typescript": "^5"
+    },
+    "dependencies": {
+        "discord.js": "^14.22.1",
+        "dotenv": "^17.2.1",
+        "zod": "^4.0.17"
+    },
+    "scripts": {
+        "up": "bun run index.ts",
+        "cmds": "bun run deploy_cmds.ts"
+    }
+}

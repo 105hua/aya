@@ -1,0 +1,27 @@
+services:
+    aya:
+        container_name: aya
+        build:
+            context: .
+            dockerfile: Dockerfile
+        environment:
+            - BOT_TOKEN=${BOT_TOKEN}
+            - CLIENT_ID=${CLIENT_ID}
+            - GUILD_ID=${GUILD_ID}
+    db:
+        container_name: aya_db
+        image: postgres:latest
+        environment:
+            - POSTGRES_USER=${POSTGRES_USER}
+            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+            - POSTGRES_DB=${POSTGRES_DB}
+        ports:
+            - 5432:5432
+    adminer:
+        container_name: aya_adminer
+        image: adminer:latest
+        ports:
+            - 8080:8080
+
+volumes:
+    pgdata:
