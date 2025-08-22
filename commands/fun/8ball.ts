@@ -3,6 +3,12 @@ import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js'
 export const data = new SlashCommandBuilder()
     .setName('8ball')
     .setDescription('Ask the magic 8ball a question.')
+    .addStringOption((option) =>
+        option
+            .setName('question')
+            .setDescription('The question to ask the 8ball.')
+            .setRequired(true)
+    )
 
 const RESPONSES = [
     'It is certain.',
