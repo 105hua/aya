@@ -1,20 +1,9 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder } from 'discord.js'
+import type { MemeResponse } from '../../types/responses/meme'
 
 export const data = new SlashCommandBuilder().setName('meme').setDescription('Sends a random meme.')
 
 const BASE_URL = 'https://meme-api.com/gimme'
-
-interface MemeResponse {
-    postLink: string
-    subreddit: string
-    title: string
-    url: string
-    nsfw: boolean
-    spoiler: boolean
-    author: string
-    ups: number
-    preview: string[]
-}
 
 export async function execute(interaction: ChatInputCommandInteraction) {
     const response = await fetch(BASE_URL)
