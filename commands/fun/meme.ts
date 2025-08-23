@@ -23,7 +23,6 @@ export async function execute(interaction: ChatInputCommandInteraction) {
         return
     }
     const meme = (await response.json()) as MemeResponse
-    console.log(meme)
     const memeEmbed = new EmbedBuilder()
         .setColor(0x0099ff)
         .setTitle(meme.title)
