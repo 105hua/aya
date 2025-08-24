@@ -5,7 +5,7 @@ Run this script when the slash commands need to be refreshed.
 */
 
 import { REST, Routes, SlashCommandBuilder } from 'discord.js'
-import { Config } from './utils/configuration'
+import { Config } from './libs/utils/configuration'
 import fs from 'node:fs'
 import path from 'node:path'
 

@@ -1,5 +1,5 @@
 import { Client, Collection, Events, GatewayIntentBits } from 'discord.js'
-import { Config } from './utils/configuration'
+import { Config } from './libs/utils/configuration'
 import fs from 'node:fs'
 import path from 'node:path'
 
