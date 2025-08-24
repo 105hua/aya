@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder } from 'discord.js'
-import type { JokeResponse } from '../../types/responses/joke'
+import type { JokeResponse } from '../../types/responses/fun_cmds/joke'
 
 export const data = new SlashCommandBuilder()
     .setName('joke')

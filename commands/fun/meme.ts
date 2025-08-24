@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder } from 'discord.js'
-import type { MemeResponse } from '../../types/responses/meme'
+import type { MemeResponse } from '../../types/responses/fun_cmds/meme'
 
 export const data = new SlashCommandBuilder().setName('meme').setDescription('Sends a random meme.')
 
