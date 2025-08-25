@@ -3,7 +3,6 @@ import { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder } from '
 export const data = new SlashCommandBuilder().setName('ping').setDescription('Replies with Pong!')
 
 export async function execute(interaction: ChatInputCommandInteraction) {
-    // Get bot ping
     const ping = Math.round(interaction.client.ws.ping)
     const pingEmbed = new EmbedBuilder()
         .setColor(0x00ff00)
