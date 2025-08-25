@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js'
+import { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder } from 'discord.js'
 
 export const data = new SlashCommandBuilder()
     .setName('8ball')
@@ -35,5 +35,10 @@ const RESPONSES = [
 
 export async function execute(interaction: ChatInputCommandInteraction) {
     const response = RESPONSES[Math.floor(Math.random() * RESPONSES.length)] as string
-    await interaction.reply(response)
+    const responseEmbed = new EmbedBuilder()
+        .setColor(0x0099ff)
+        .setTitle('🎱 The Magic 8-Ball says...')
+        .setDescription(response)
+        .setFooter({ text: 'Ask again if you wish.' })
+    await interaction.reply({ embeds: [responseEmbed] })
 }

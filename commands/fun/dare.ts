@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js'
+import { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder } from 'discord.js'
 import { TodBotWrapper } from '../../libs/wrappers/todbot'
 
 export const data = new SlashCommandBuilder()
@@ -8,5 +8,9 @@ export const data = new SlashCommandBuilder()
 export async function execute(interaction: ChatInputCommandInteraction) {
     await interaction.deferReply()
     const dare = await TodBotWrapper.getQuestion('dare')
-    await interaction.editReply(dare.question)
+    const dareEmbed = new EmbedBuilder()
+        .setColor(0x0099ff)
+        .setTitle('Dare')
+        .setDescription(dare.question)
+    await interaction.editReply({ embeds: [dareEmbed] })
 }
