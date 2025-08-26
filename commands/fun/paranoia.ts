@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder } from 'discord.js'
-import { TodBotWrapper } from '../../libs/wrappers/todbot'
+import { TodBotWrapper } from '../../libs/wrappers/todbotapi'
 
 export const data = new SlashCommandBuilder()
     .setName('paranoia')
