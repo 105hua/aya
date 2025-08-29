@@ -1,0 +1,17 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model Infractions {
+    id          String   @id @default(cuid())
+    userId      String
+    moderatorId String
+    reason      String
+    type        String
+    issuedAt    DateTime @default(now())
+}
