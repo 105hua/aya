@@ -5,6 +5,12 @@ const Configuration = z.object({
     BOT_TOKEN: z.string().min(1, 'BOT_TOKEN is required'),
     CLIENT_ID: z.string().min(1, 'CLIENT_ID is required'),
     GUILD_ID: z.string().min(1, 'GUILD_ID is required'),
+    OWNER_MEMBER_ID: z.string().min(1, 'OWNER_MEMBER_ID is required'),
+    MODERATOR_ROLE_ID: z.string().min(1, 'MODERATOR_ROLE_ID is required'),
+    DEBUG: z
+        .enum(['true', 'false'])
+        .default('false')
+        .transform((v) => v === 'true'),
 })
 
 export const Config = Configuration.parse(process.env)
