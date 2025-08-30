@@ -1,9 +1,9 @@
-import { Events, type Interaction, type ChatInputCommandInteraction } from 'discord.js'
+import { Events, ChatInputCommandInteraction } from 'discord.js'
 import type { AyaClient } from '..'
 
 export default {
     name: Events.InteractionCreate,
-    async execute(interaction: Interaction) {
+    async execute(interaction: ChatInputCommandInteraction) {
         if (!interaction.isChatInputCommand()) return
 
         const client = interaction.client as AyaClient
