@@ -7,6 +7,8 @@ const Configuration = z.object({
     GUILD_ID: z.string().min(1, 'GUILD_ID is required'),
     OWNER_MEMBER_ID: z.string().min(1, 'OWNER_MEMBER_ID is required'),
     MODERATOR_ROLE_ID: z.string().min(1, 'MODERATOR_ROLE_ID is required'),
+    NASA_API_KEY: z.string().min(1, 'NASA_API_KEY is required'),
+    FREE_CRYPTO_API_KEY: z.string().min(1, 'FREE_CRYPTO_API_KEY is required'),
     DEBUG: z
         .enum(['true', 'false'])
         .default('false')
