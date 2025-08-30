@@ -9,7 +9,13 @@ export interface AyaClient extends Client {
 }
 
 // Client setup.
-const client = new Client({ intents: [GatewayIntentBits.Guilds] }) as AyaClient
+const client = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+    ],
+}) as AyaClient
 client.commands = new Collection()
 
 // Commands setup

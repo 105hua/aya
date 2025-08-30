@@ -15,3 +15,10 @@ model Infractions {
     type        String
     issuedAt    DateTime @default(now())
 }
+
+model Experience {
+    userId     String @id @unique
+    xp         Int    @default(0)
+    level      Int    @default(0)
+    requiredXp Int    @default(100)
+}
