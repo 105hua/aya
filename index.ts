@@ -4,7 +4,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 // Interface to accomodate for commands collection.
-interface AyaClient extends Client {
+export interface AyaClient extends Client {
     commands: Collection<string, any>
 }
 
@@ -32,37 +32,19 @@ for (const folder of commandFolders) {
     }
 }
 
-// Event for when the bot is ready.
-client.once(Events.ClientReady, (c) => {
-    console.log(`Ready! Logged in as ${c.user.tag}`)
-})
-
-// Event for created interactions.
-client.on(Events.InteractionCreate, async (interaction) => {
-    if (!interaction.isChatInputCommand()) return
-    const command = client.commands.get(interaction.commandName)
-    if (!command) {
-        console.error(`No command matching ${interaction.commandName} was found.`)
-        return
+// Events setup
+const eventsPath = path.join(__dirname, 'events')
+const eventFiles = fs.readdirSync(eventsPath).filter((file) => file.endsWith('.ts'))
+for (const file of eventFiles) {
+    const filePath = path.join(eventsPath, file)
+    const eventModule = await import(filePath)
+    const event = eventModule.default || eventModule
+    if (event.once) {
+        client.once(event.name, (...args) => event.execute(...args))
+    } else {
+        client.on(event.name, (...args) => event.execute(...args))
     }
-    try {
-        await command.execute(interaction)
-    } catch (error) {
-        console.error(`Error executing ${interaction.commandName}`)
-        console.error(error)
-        if (interaction.replied || interaction.deferred) {
-            await interaction.followUp({
-                content: 'There was an error while executing this command!',
-                ephemeral: true,
-            })
-        } else {
-            await interaction.reply({
-                content: 'There was an error while executing this command!',
-                ephemeral: true,
-            })
-        }
-    }
-})
+}
 
 // Login as bot.
 client.login(Config.BOT_TOKEN)
