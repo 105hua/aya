@@ -36,6 +36,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
 
     const coinData = data.symbols[0]!
     const coinEmbed = new EmbedBuilder()
+        .setColor(0x0099ff)
         .setTitle(`Crypto Summary: ${coinData.symbol}`)
         .setDescription(
             `Last Price: $${coinData.last} (${coinData.last_btc} BTC)\n` +

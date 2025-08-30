@@ -5,7 +5,7 @@ export const data = new SlashCommandBuilder().setName('ping').setDescription('Re
 export async function execute(interaction: ChatInputCommandInteraction) {
     const ping = Math.round(interaction.client.ws.ping)
     const pingEmbed = new EmbedBuilder()
-        .setColor(0x00ff00)
+        .setColor(0x0099ff)
         .setTitle('Pong! 🏓')
         .setDescription(`Bot latency: **${ping}ms**`)
         .setTimestamp()
