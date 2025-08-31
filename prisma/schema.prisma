@@ -24,13 +24,12 @@ model Experience {
 }
 
 model Economy {
-    userId      String    @id @unique
-    balance     Int
-    bank        Int       @default(0)
-    lastDaily   DateTime?
-    lastWeekly  DateTime?
-    lastMonthly DateTime?
-    lastWork    DateTime?
-    lastRob     DateTime?
-    lastCrime   DateTime?
+    userId     String    @id @unique
+    balance    Int
+    bank       Int       @default(0)
+    lastDaily  DateTime?
+    lastWeekly DateTime?
+    lastWork   DateTime?
+    lastRob    DateTime?
+    lastCrime  DateTime?
 }
