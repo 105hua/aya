@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { Config } from './configuration'
 
 const prisma = new PrismaClient()
 
@@ -9,7 +10,10 @@ export async function ensureUserEconomy(userId: string): Promise<void> {
         })
     } catch (err) {
         await prisma.economy.create({
-            data: { userId },
+            data: {
+                userId: userId,
+                balance: Config.STARTING_BALANCE,
+            },
         })
     }
 }

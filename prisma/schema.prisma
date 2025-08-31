@@ -25,7 +25,7 @@ model Experience {
 
 model Economy {
     userId      String    @id @unique
-    balance     Int       @default(0)
+    balance     Int
     bank        Int       @default(0)
     lastDaily   DateTime?
     lastWeekly  DateTime?

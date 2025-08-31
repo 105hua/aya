@@ -12,6 +12,10 @@ const Configuration = z.object({
     AI_BASE_URL: z.url('AI_BASE_URL must be a valid URL').optional(),
     AI_API_KEY: z.string().min(1, 'AI_API_KEY is required').startsWith('sk'),
     AI_MODEL: z.string().min(1, 'AI_MODEL is required'),
+    STARTING_BALANCE: z.string().pipe(z.coerce.number()).default(1000),
+    DAILY_REWARD: z.string().pipe(z.coerce.number()).default(500),
+    WEEKLY_REWARD: z.string().pipe(z.coerce.number()).default(2000),
+    MONTHLY_REWARD: z.string().pipe(z.coerce.number()).default(5000),
     DEBUG: z
         .enum(['true', 'false'])
         .default('false')
