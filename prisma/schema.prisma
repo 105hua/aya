@@ -22,3 +22,15 @@ model Experience {
     level      Int    @default(0)
     requiredXp Int    @default(100)
 }
+
+model Economy {
+    userId      String    @id @unique
+    balance     Int       @default(0)
+    bank        Int       @default(0)
+    lastDaily   DateTime?
+    lastWeekly  DateTime?
+    lastMonthly DateTime?
+    lastWork    DateTime?
+    lastRob     DateTime?
+    lastCrime   DateTime?
+}
