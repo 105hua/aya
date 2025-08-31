@@ -9,7 +9,7 @@ const Configuration = z.object({
     MODERATOR_ROLE_ID: z.string().min(1, 'MODERATOR_ROLE_ID is required'),
     NASA_API_KEY: z.string().min(1, 'NASA_API_KEY is required'),
     FREE_CRYPTO_API_KEY: z.string().min(1, 'FREE_CRYPTO_API_KEY is required'),
-    AI_BASE_URL: z.url('AI_BASE_URL must be a valid URL'),
+    AI_BASE_URL: z.url('AI_BASE_URL must be a valid URL').optional(),
     AI_API_KEY: z.string().min(1, 'AI_API_KEY is required').startsWith('sk'),
     AI_MODEL: z.string().min(1, 'AI_MODEL is required'),
     DEBUG: z
