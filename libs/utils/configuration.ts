@@ -16,6 +16,8 @@ const Configuration = z.object({
     DAILY_REWARD: z.string().pipe(z.coerce.number()).default(500),
     WEEKLY_REWARD: z.string().pipe(z.coerce.number()).default(2000),
     MONTHLY_REWARD: z.string().pipe(z.coerce.number()).default(5000),
+    WORK_MIN: z.string().pipe(z.coerce.number()).default(100),
+    WORK_MAX: z.string().pipe(z.coerce.number()).default(500),
     DEBUG: z
         .enum(['true', 'false'])
         .default('false')
