@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js'
+import { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder } from 'discord.js'
 import { Config } from '../../libs/utils/configuration'
 import { getSystemPrompt } from '../../libs/wrappers/sys_prompts'
 import OpenAI from 'openai'
@@ -30,10 +30,15 @@ export async function execute(interaction: ChatInputCommandInteraction) {
         if (answer === null) {
             throw new Error('No answer from AI')
         }
-        if (answer === '' || answer.length > 2000) {
+        if (answer === '' || answer.length > 4096) {
             return await interaction.editReply('The response is too long or empty.')
         }
-        await interaction.editReply(answer)
+        const resultEmbed = new EmbedBuilder()
+            .setColor(0x0099ff)
+            .setTitle('Search Results')
+            .setDescription(answer)
+            .setFooter({ text: 'AI-Generated. Trust but verify.' })
+        await interaction.editReply({ embeds: [resultEmbed] })
     } catch (err) {
         console.error(err)
         await interaction.editReply('An error occurred while processing your request.')
