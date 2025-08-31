@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js'
+import { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder } from 'discord.js'
 import type { TimezoneResponse } from '../../types/responses/info_cmds/timezone'
 
 const API_URL = 'https://timeapi.io'
@@ -26,11 +26,29 @@ export async function execute(interaction: ChatInputCommandInteraction) {
             )
         }
         const data = (await response.json()) as TimezoneResponse
-        const formattedTime = new Date(data.dateTime).toLocaleString('en-GB', {
+        const dateTime = new Date(data.dateTime)
+
+        const formattedTime = dateTime.toLocaleString('en-GB', {
             timeZone: timezone,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
             hour12: true,
         })
-        await interaction.editReply(`The current time in ${data.timeZone} is ${formattedTime}`)
+
+        const formattedDate = dateTime.toLocaleString('en-GB', {
+            timeZone: timezone,
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        })
+
+        const timeEmbed = new EmbedBuilder()
+            .setTitle(`Current Time in ${data.timeZone}`)
+            .setDescription(`**Date:** ${formattedDate}\n**Time:** ${formattedTime}`)
+
+        await interaction.editReply({ embeds: [timeEmbed] })
     } catch (err) {
         console.error('Error fetching time data:', err)
         await interaction.editReply(
