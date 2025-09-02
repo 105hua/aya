@@ -18,7 +18,9 @@ export async function execute(interaction: ChatInputCommandInteraction) {
             where: { userId },
             data: { balance: { increment: Config.WEEKLY_REWARD }, lastWeekly: new Date() },
         })
-        return await interaction.reply('You have collected your weekly 500 coins!')
+        return await interaction.reply(
+            `You have collected your weekly £${Config.WEEKLY_REWARD.toLocaleString('en')}!`
+        )
     }
     const lastWeekly = new Date(userEconomy.lastWeekly)
     const now = new Date()
@@ -28,7 +30,9 @@ export async function execute(interaction: ChatInputCommandInteraction) {
             where: { userId },
             data: { balance: { increment: Config.WEEKLY_REWARD }, lastWeekly: new Date() },
         })
-        return await interaction.reply('You have collected your weekly 500 coins!')
+        return await interaction.reply(
+            `You have collected your weekly £${Config.WEEKLY_REWARD.toLocaleString('en')}!`
+        )
     }
     return await interaction.reply(
         'You have already collected your weekly coins. Please try again later.'

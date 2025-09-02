@@ -34,7 +34,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
             where: { userId },
             data: { balance: { increment: reward }, lastWork: new Date() },
         })
-        return await interaction.reply(`You worked as a ${job} and earned ${reward} coins!`)
+        return await interaction.reply(`You worked as a ${job} and earned £${reward}!`)
     }
     const lastDaily = new Date(userEconomy.lastWork)
     const now = new Date()
@@ -44,7 +44,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
             where: { userId },
             data: { balance: { increment: Config.DAILY_REWARD }, lastDaily: new Date() },
         })
-        return await interaction.reply(`You worked as a ${job} and earned ${reward} coins!`)
+        return await interaction.reply(`You worked as a ${job} and earned £${reward} coins!`)
     }
     return await interaction.reply(
         'You are still tired from your last shift. Please try again later.'
