@@ -31,5 +31,5 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     if (result.count === 0) {
         return await interaction.reply("You've already collected your weekly money.")
     }
-    return await interaction.reply(`You have collected your weekly $${Config.WEEKLY_REWARD}!`)
+    return await interaction.reply(`You have collected your weekly £${Config.WEEKLY_REWARD}!`)
 }
