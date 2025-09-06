@@ -2,6 +2,7 @@ import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js'
 import { PrismaClient } from '@prisma/client'
 import { Config } from '../../libs/utils/configuration'
 import { ensureUserEconomy } from '../../libs/utils/economy'
+import { TimeUtils } from '../../libs/utils/times'
 
 const prisma = new PrismaClient()
 
@@ -25,28 +26,30 @@ export const data = new SlashCommandBuilder()
 export async function execute(interaction: ChatInputCommandInteraction) {
     const userId = interaction.user.id
     await ensureUserEconomy(userId)
+
+    const now = new Date()
+    const twelveHoursAgo = new Date(now.getTime() - TimeUtils.hours(12))
+
     const reward =
         Math.floor(Math.random() * (Config.WORK_MAX - Config.WORK_MIN + 1)) + Config.WORK_MIN
     const job = jobs[Math.floor(Math.random() * jobs.length)]
-    const userEconomy = await prisma.economy.findUnique({ where: { userId } })
-    if (!userEconomy?.lastWork) {
-        await prisma.economy.update({
-            where: { userId },
-            data: { balance: { increment: reward }, lastWork: new Date() },
-        })
-        return await interaction.reply(`You worked as a ${job} and earned £${reward}!`)
+
+    const result = await prisma.economy.updateMany({
+        where: {
+            userId,
+            OR: [{ lastWork: { lt: twelveHoursAgo } }],
+        },
+        data: {
+            balance: { increment: reward },
+            lastWork: now,
+        },
+    })
+
+    if (result.count === 0) {
+        return await interaction.reply(
+            'You are still tired from your last shift. Please try again later.'
+        )
     }
-    const lastDaily = new Date(userEconomy.lastWork)
-    const now = new Date()
-    const diffHours = Math.abs(now.getTime() - lastDaily.getTime()) / (1000 * 60 * 60)
-    if (diffHours >= 12) {
-        await prisma.economy.update({
-            where: { userId },
-            data: { balance: { increment: Config.DAILY_REWARD }, lastDaily: new Date() },
-        })
-        return await interaction.reply(`You worked as a ${job} and earned £${reward} coins!`)
-    }
-    return await interaction.reply(
-        'You are still tired from your last shift. Please try again later.'
-    )
+
+    return await interaction.reply(`You worked as a **${job}** and earned **£${reward}!`)
 }
