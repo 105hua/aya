@@ -2,6 +2,7 @@ import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js'
 import { PrismaClient } from '@prisma/client'
 import { Config } from '../../libs/utils/configuration'
 import { ensureUserEconomy } from '../../libs/utils/economy'
+import { TimeUtils } from '../../libs/utils/times'
 
 const prisma = new PrismaClient()
 
@@ -12,29 +13,23 @@ export const data = new SlashCommandBuilder()
 export async function execute(interaction: ChatInputCommandInteraction) {
     const userId = interaction.user.id
     await ensureUserEconomy(userId)
-    const userEconomy = await prisma.economy.findUnique({ where: { userId } })
-    if (!userEconomy?.lastDaily) {
-        await prisma.economy.update({
-            where: { userId },
-            data: { balance: { increment: Config.DAILY_REWARD }, lastDaily: new Date() },
-        })
-        return await interaction.reply(
-            `You have collected your daily £${Config.DAILY_REWARD.toLocaleString('en')}!`
-        )
-    }
-    const lastDaily = new Date(userEconomy.lastDaily)
+
     const now = new Date()
-    const diffDays = Math.abs(now.getTime() - lastDaily.getTime()) / (1000 * 60 * 60)
-    if (diffDays >= 1) {
-        await prisma.economy.update({
-            where: { userId },
-            data: { balance: { increment: Config.DAILY_REWARD }, lastDaily: new Date() },
-        })
-        return await interaction.reply(
-            `You have collected your daily £${Config.DAILY_REWARD.toLocaleString('en')}!`
-        )
+    const yesterday = new Date(now.getTime() - TimeUtils.days(1))
+
+    const result = await prisma.economy.updateMany({
+        where: {
+            userId: userId,
+            lastDaily: { lt: yesterday },
+        },
+        data: {
+            balance: { increment: Config.DAILY_REWARD },
+            lastDaily: now,
+        },
+    })
+
+    if (result.count === 0) {
+        return await interaction.reply("You've already collected your daily money.")
     }
-    return await interaction.reply(
-        'You have already collected your daily coins. Please try again later.'
-    )
+    return await interaction.reply(`You have collected your daily $${Config.DAILY_REWARD}!`)
 }
